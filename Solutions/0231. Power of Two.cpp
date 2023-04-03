@@ -1,6 +1,9 @@
 class Solution {
 public:
     bool isPowerOfTwo(int n) {
+        // Approach 1
+/* 
+
         if(n<1){
             return false;
         }
@@ -20,5 +23,18 @@ public:
         }
 
         return false;
+
+*/
+        // Approach 2 - Bitwise
+        if(n<1){
+            return false;
+        }
+
+        if((n & (n-1)) == 0){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 };
