@@ -1,0 +1,82 @@
+class Solution {
+public:
+    /* // Time Limit Exceeded
+    int recursion(vector<int>& nums, int n){
+        if(n < 0){
+            return 0;
+        }
+
+        if(n == 0){
+            return nums[n];
+        }
+
+        int pick = nums[n] + recursion(nums, n-2);
+        int notpick = recursion(nums, n-1);
+
+        return max(pick, notpick);
+    }
+    */
+    
+    /*
+    int memorization(vector<int>& nums, int n,vector<int>& dp){
+        if(n < 0){
+            return 0;
+        }
+
+        if(n == 0){
+            return nums[n];
+        }
+
+        if(dp[n] != -1){
+            return dp[n];
+        }
+
+        int pick = nums[n] + memorization(nums, n-2, dp);
+        int notpick = memorization(nums, n-1, dp);
+        dp[n] = max(pick, notpick);
+        return dp[n];
+    }
+    */
+
+    /*
+    int tabulation(vector<int>& nums, int n){
+        vector<int> dp(n+1, 0);
+        dp[0] = nums[0];
+
+        for(int i=1;i<=n;i++){
+            int pick  = nums[i];
+            if (i > 1)
+                pick += dp[i-2];
+            int notpick = dp[i-1];
+
+            dp[i] = max(pick, notpick);
+        }
+
+        return dp[n];
+    }
+    */
+
+    int spaceOpt(vector<int>& nums, int n){
+        int prev2 = 0;
+        int prev1 = nums[0];
+
+        for(int i=1;i<=n;i++){
+            int curr = max(nums[i] +  prev2,  prev1);
+            prev2 = prev1;
+            prev1 = curr;
+        }
+        return prev1;
+    }
+
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        // return recursion(nums, n-1);
+
+        // vector<int> dp(n+1, -1);
+        // return memorization(nums, n-1, dp);
+
+        // return tabulation(nums, n-1);
+
+        return spaceOpt(nums, n-1);
+    }
+};
