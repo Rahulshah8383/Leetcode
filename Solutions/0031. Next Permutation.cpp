@@ -1,22 +1,32 @@
 class Solution {
 public:
-    void nextPermutation(vector<int>& nums) {
-       int n = nums.size(), k, l;
-    	for (k = n - 2; k >= 0; k--) {
-            if (nums[k] < nums[k + 1]) {
+   void nextPermutation(vector<int>& nums) {
+        int idx = -1;
+        int n = nums.size();
+        
+        // Step 1: Find the break point:
+        for(int i=n-2;i>=0;i--){
+            if(nums[i] < nums[i+1]){
+                // index i is the break point
+                idx = i;
                 break;
             }
         }
-    	if (k < 0) {
-    	    reverse(nums.begin(), nums.end());
-    	} else {
-    	    for (l = n - 1; l > k; l--) {
-                if (nums[l] > nums[k]) {
-                    break;
-                }
-            } 
-    	    swap(nums[k], nums[l]);
-    	    reverse(nums.begin() + k + 1, nums.end());
+
+        // If break point does not exist:
+        if(idx == -1){
+            return reverse(nums.begin(), nums.end());
         }
+
+        // Step 2: Find the next greater element and swap it with arr[ind]:
+        for(int i=n-1;i>idx;i--){
+            if(nums[i] > nums[idx]){
+                swap(nums[i], nums[idx]);
+                break;
+            }
+        }
+
+        // Step 3: reverse the right half:
+        return reverse(nums.begin()+idx+1, nums.end());
     }
 };
