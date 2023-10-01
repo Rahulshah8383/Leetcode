@@ -41,7 +41,6 @@ public:
 
     double champagneTower(int poured, int query_row, int query_glass) {
         memset(t, -1, sizeof(t));
-        
         // solve funcion which return answer
         return min(1.00, solve(poured, query_row, query_glass));
     }
