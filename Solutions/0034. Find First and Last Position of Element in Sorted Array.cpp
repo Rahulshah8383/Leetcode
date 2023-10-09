@@ -29,6 +29,35 @@ public:
     }
     */
 
+    nt binarySearch(vector<int>& nums, int target, bool findright){
+        int low = 0;
+        int high = nums.size()-1;
+        int index = -1;
+
+        while(low <= high){
+            int mid = low + (high-low)/2;
+
+            if(nums[mid] == target){
+                index = mid;
+                if(findright){
+                    low = mid+1;
+                }
+                else{
+                    high = mid-1;
+                }
+            }
+
+            else if(nums[mid] < target){
+                low = mid+1;
+            }
+            else{
+                high = mid-1;
+            }
+        }
+
+        return index;
+    }
+
     vector<int> searchRange(vector<int>& nums, int target) {
         // vector<int> res;
         // int size = nums.size();
@@ -38,6 +67,8 @@ public:
         // res.push_back(b);
         // return res;
 
+        /*
+        // O(N), O(N)
         vector<int> ans;
         int n = nums.size();
         for (int i = 0; i < n; ++i) {
@@ -62,5 +93,16 @@ public:
         }
         
         return res;
+        */
+
+        int left = binarySearch(nums, target, false);
+       int right = binarySearch(nums, target, true);
+       
+        if(left <= right){
+            return {left, right};
+        }
+        else{
+           return {-1, -1};
+        }
     }
 };
