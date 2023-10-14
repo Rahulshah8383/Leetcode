@@ -1,6 +1,7 @@
 class Solution {
 public:
     int maximalNetworkRank(int n, vector<vector<int>>& roads) {
+        /*
         vector<int>ad[n+1];
         for(auto x:roads){
             ad[x[0]].push_back(x[1]);
@@ -20,6 +21,27 @@ public:
                 ans = max(ans, temp_ans);
             }
         }
+        return ans;
+        */
+
+        vector<vector<bool>> adj(n , vector<bool>(n,false));
+        vector<int> indegree(n, 0);
+
+        for(auto it : roads){
+            int u = it[0], v = it[1];
+            adj[u][v] = 1;
+            adj[v][u] = 1;
+            indegree[u]++;
+            indegree[v]++;
+        }
+
+        int ans = 0;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                ans = max(ans, indegree[i]+indegree[j] - adj[i][j]);
+            }
+        }
+
         return ans;
     }
 };
