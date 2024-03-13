@@ -30,5 +30,20 @@ public:
         else{
             return ans;
         }
+
+        // unordered_map<char, int> map;
+
+        // for(int i=s.length()-1;i>=0;i--){
+        //     map[s[i]]++;    
+        // }
+
+        // for(auto x: map){
+        //     cout<<x.first<<" "<<x.second<<endl;
+        //     size_t found = s.find(x.first);
+        //     if((x.second == 1) && (found != string::npos))
+        //         return found;
+        // }
+
+        // return -1;
     }
 };
