@@ -1,33 +1,46 @@
 class Solution {
 public:
-    void soln(vector<int>adj[],int node,vector<bool>&vis){
-        vis[node] = 1;
-        for(auto i:adj[node]){
-            if(!vis[i]){
-                soln(adj,i,vis);
-            }
+    void BFS(int node, unordered_map<int, list<int>> &adjList, vector<int> &visited){
+        visited[node] = 1;
+        queue<int> q;
+        q.push(node);
+
+        while(!q.empty()){
+            int front = q.front(); q.pop();
+
+            for(auto neighbour : adjList[front]){
+                if(!visited[neighbour]){
+                    visited[neighbour] = 1;
+                    q.push(neighbour);
+                }
+            } 
         }
     }
-    
+
     int findCircleNum(vector<vector<int>>& isConnected) {
-        int n = isConnected.size();
-        vector<int>adj[n];
-        for(int i = 0;i<n;i++){
-            for(int j = 0;j<n;j++){
-                if(isConnected[i][j]){
-                adj[i].push_back(j);
-                adj[j].push_back(i);
+        int V = isConnected.size();
+        
+        unordered_map<int, list<int>> adjList;
+        for(int i=0;i<V;i++){
+            for(int j=0;j<V;j++){
+                if(isConnected[i][j] == 1){
+                    adjList[i].push_back(j);
+                    adjList[j].push_back(i);
                 }
             }
         }
-        vector<bool>vis(n,0);
-        int ans= 0;
-        for(int i = 0;i<n;i++){
-            if(!vis[i]){
-                soln(adj,i,vis);
-                ans++;
+
+
+        vector<int> visited(V, 0);
+        int cnt = 0;
+
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                BFS(i, adjList, visited);
+                cnt++;
             }
         }
-        return ans;
+
+        return cnt;
     }
 };
