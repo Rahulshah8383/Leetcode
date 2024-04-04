@@ -1,25 +1,49 @@
 class Solution {
-public:
-    void dfs(int row, int col, vector<vector<char>>& board, vector<vector<int>> &vis){
-        int n = board.size();
-        int m = board[0].size();
+private:
+    void dfs(int row, int col, vector<vector<char>>& board, vector<vector<int>>& visited, int n, int m){
+        visited[row][col] = 1;
 
-        vis[row][col] = 1;
+        int delRow[] = {-1, 0, 0, +1};
+        int delCol[] = {0, -1, +1, 0};
 
-        int delrow[] = {-1, 0, +1, 0};
-        int delcol[] = {0, +1, 0, -1};
+        for(int i=0;i<4;i++){
+            int nrow = row + delRow[i];
+            int ncol = col + delCol[i];
 
-        for(int i = 0; i < 4; i++){
-            int nrow = row + delrow[i];
-            int ncol = col + delcol[i];
-
-            if(nrow >= 0 && nrow < n && ncol >= 0 && ncol < m && !vis[nrow][ncol] && board[nrow][ncol] == 'O'){
-                dfs(nrow, ncol, board, vis);
+            if(nrow >= 0 && nrow < n && ncol >= 0 && ncol < m && board[nrow][ncol] == 'O' && !visited[nrow][ncol]){
+                dfs(nrow, ncol, board, visited, n, m);
             }
         }
     }
 
-    void solve(vector<vector<char>>& board){
+    void bfs(int row, int col, vector<vector<char>>& board, vector<vector<int>>& visited, int n, int m){
+        visited[row][col] = 1;
+
+        queue<pair<int, int>> q;
+        q.push({row, col});
+
+        int delRow[] = {-1, 0, 0, +1};
+        int delCol[] = {0, -1, +1, 0};
+
+        while(!q.empty()){
+            int irow = q.front().first;
+            int icol = q.front().second;
+            q.pop();
+
+            for(int i=0;i<4;i++){
+                int nrow = irow + delRow[i];
+                int ncol = icol + delCol[i];
+
+                if(nrow >= 0 && nrow < n && ncol >= 0 && ncol < m && board[nrow][ncol] == 'O' && !visited[nrow][ncol]){
+                    visited[nrow][ncol] = 1;
+                    q.push({nrow, ncol});
+                }
+            }
+        }
+    }
+
+public:
+    void solve(vector<vector<char>>& board) {
         int n = board.size();
         if(n == 1){
             return;
@@ -33,23 +57,27 @@ public:
         for(int col=0;col<m;col++){
             //first row
             if(board[0][col] == 'O' && !vis[0][col]){
-                dfs(0, col, board, vis);
+                // dfs(0, col, board, vis, n, m);
+                bfs(0, col, board, vis, n, m);
             }
 
             //last row
             if(board[n-1][col] == 'O' && !vis[n-1][col]){
-                dfs(n-1, col, board, vis);
+                // dfs(n-1, col, board, vis, n, m);
+                bfs(n-1, col, board, vis, n, m);
             }
         }
 
         //traverse fisrt col and last col
         for(int row=0;row<n;row++){
             if(board[row][0] == 'O' && !vis[row][0]){
-                dfs(row, 0, board, vis);
+                // dfs(row, 0, board, vis, n, m);
+                bfs(row, 0, board, vis, n, m);
             }
 
             if(board[row][m-1] == 'O' && !vis[row][m-1]){
-                dfs(row, m-1, board, vis);
+                // dfs(row, m-1, board, vis, n, m);
+                bfs(row, m-1, board, vis, n, m);
             }
         }
 
@@ -60,6 +88,5 @@ public:
                 }
             }
         }
-
     }
 };
