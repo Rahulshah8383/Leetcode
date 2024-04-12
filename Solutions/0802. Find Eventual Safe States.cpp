@@ -1,6 +1,41 @@
 class Solution {
 public:
      bool dfs(vector<vector<int>>&AdjList, vector<bool>&visited, vector<bool> &dfsVisited, int node){
+          int V = graph.size();
+        // vector<int> indegree(V, 0);
+        // unordered_map<int, list<int>> reverseGraph(V);
+
+        // for(int i=0;i<V;i++){
+        //     for(int j : graph[i]){
+        //         reverseGraph[j].push_back(i);
+        //         indegree[i]++;
+        //     }
+        // }
+
+        // queue<int> q;
+        // vector<int> ans;
+        // for(int i=0;i<V;i++){
+        //     if(indegree[i] == 0){
+        //         q.push(i);
+        //     }
+        // }
+
+        // while(!q.empty()){
+        //     int front = q.front();
+        //     q.pop();
+        //     ans.push_back(front);
+
+        //     for(auto it : reverseGraph[front]){
+        //         indegree[it]--;
+        //         if(indegree[it] == 0){
+        //             q.push(it);
+        //         }
+        //     }
+        // }
+        // sort(ans.begin(), ans.end());
+
+        // return ans;
+          
         visited[node] = true;
         dfsVisited[node] = true;
 
