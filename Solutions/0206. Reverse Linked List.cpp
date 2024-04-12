@@ -15,6 +15,20 @@ public:
             return head;
         }
 
+        ListNode* prev = NULL;
+        // ListNode* curr = head;
+        // ListNode* nxt = head->next;
+
+        // while(nxt != NULL){
+        //     curr->next = prev;
+        //     prev = curr;
+        //     curr = nxt;
+        //     nxt = nxt->next;
+        // }
+
+        // curr->next = prev;
+        // return curr;
+
         ListNode *prev = NULL;
         ListNode *curr = head;
         ListNode *Nex = NULL;
